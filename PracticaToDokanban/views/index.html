@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular.min.js"></script>
+<!--Cargamos el angular desde la pag -->
+<script src="../Assets/js/script.js"></script><!-- Cargamos el script de java -->
+<html ng-app='kanbanApp'>
+<!-- Indicamos que se usara angular con esta directiva -->
+
+<head>
+	<meta charset="utf-8">
+
+	<title>abc de angular</title>
+</head>
+
+<body>
+
+
+	<h1>Tareas pendientes</h1>
+	<div ng-controller='KanbanController as kanbanCtrl'>
+		<!-- Creamos el ng-controller que es el controlador  y le damos un alias con el as-->
+		<form ng-submit="kanbanCtrl.add()">
+			<!-- Le damos el metodo de agregar al form para que agrege al arreglo-->
+			<span>
+				<p>Nombre:</p><input type="text" ng-model="obj.name">
+				<!-- Usamos el ng-model para asignarle la variable name y asignarsela al obj-->
+				<p>Descripcion:</p><input type="text" ng-model="obj.description">
+				<!-- Usamos el ng-model para asignarle la variable description  y asignarsela al obj-->
+				<input type="submit" value="Guardar"><!-- -->
+			</span>
+		</form>
+		<p>{{kanbanCtrl.tasks}}</p>
+
+		<ul>
+			<h3>ToDo</h3>
+			<li ng-repeat="task in kanbanCtrl.tasks | filter:{status:1}">
+				<span>{{task.name}}</span>
+				<button ng-click="kanbanCtrl.aumentar(task.index);">--></button>
+			</li>
+			<h3>Doing</h3>
+			<li ng-repeat="task in kanbanCtrl.tasks | filter:{status:2}">
+				<button ng-click="kanbanCtrl.disminuir(task.index);"><--</button> 
+				<span>{{task.name}}</span>
+				<button ng-click="kanbanCtrl.aumentar(task.index);">--></button>
+			</li>
+			<h3>Done</h3>
+			<li ng-repeat="task in kanbanCtrl.tasks | filter:{status:3}">
+				<span>{{task.name}}</span>
+				<button ng-click="kanbanCtrl.disminuir(task.index);">
+					<--</button> </li> </ul> </div> </body> </html>
